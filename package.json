@@ -1,0 +1,24 @@
+{
+  "name": "charmaker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sshillyer/charmaker.git"
+  },
+  "author": "Shawn Hillyer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sshillyer/charmaker/issues"
+  },
+  "homepage": "https://github.com/sshillyer/charmaker#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "mongoose": "^4.6.4"
+  }
+}
