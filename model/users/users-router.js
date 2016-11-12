@@ -29,8 +29,9 @@ router.route('/').get((req, res, next) => {
 // POST route: /users (Create new skill)
 // Returns: JSON of new user
 router.route('/').post((req, res, next) => {
-    // Check if username is taken
     var userName = req.body.username;
+
+    // TODO Hash the username and password together & store as the 'secret'
 
     User.findOne({ username: userName}, function(err, result) {
         // If userName not found, then we can create the new user
@@ -87,8 +88,6 @@ router.route('/:username').post((req, res, next) => {
 
 // PUT route: /users/{username}
 router.route('/:username').put((req, res, next) => {
-    // console.log("put request");
-    // req.body.username = req.params.username;
     var userName = req.params.username;
 
     // Lookup the user; if found, update the values in req.body
@@ -110,20 +109,47 @@ router.route('/:username').put((req, res, next) => {
 // DELETE route: /users/{username}
 // TODO: Delete all characters created by this username
 router.route('/:username').delete((req, res, next) => {
-    console.log("Attempting to remove username: " + req.params.username);
+    var userName = req.params.username;
+    console.log("Attempting to remove username: " + userName);
 
-    User.remove( {username: req.params.username})
-    .then(doc => {
-        if(!doc) {
-            // No success
-            res.status(404).end();
+    // Lookup the user; if found, update the values in req.body
+    User.findOne({ username: userName}, function(err, result) {
+        // userName not found
+        if (!result) {
+            res.status(400).json({
+                errorMessage: 'Username not found',
+            });
         }
-        else {
-            // 204: success and no body content
-            res.status(204).end();
+
+        // userName was found, delete its characters then delete it
+        else  {
+            // Delete the characters belong to this user
+            console.log(orphanCharacters);
+
+            var orphanCharacters = result.characters;
+            for (var i = 0; i < orphanCharacters.length; i++){
+                console.log("Trying to remove: " + orphanCharacters[i]);
+                Character.find({_id: orphanCharacters[i]})
+                    .remove().exec()
+            }
+
+            // Now delete it
+            User.remove( {username: req.params.username})
+                .then(doc => {
+                    if(!doc) {
+                        // No success
+                        res.status(404).end();
+                    }
+                    else {
+                        // 204: success and no body content
+                        res.status(204).end();
+                    }
+                })
+                .catch(err => next(err));
         }
-    })
-    .catch(err => next(err));
+    });
+
+    
 });
 
 
