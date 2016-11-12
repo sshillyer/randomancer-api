@@ -87,16 +87,41 @@ router.route('/:username').post((req, res, next) => {
 
 // PUT route: /users/{username}
 router.route('/:username').put((req, res, next) => {
-    controller.update(req, res, next);
+    // console.log("put request");
+    // req.body.username = req.params.username;
+    var userName = req.params.username;
+
+    // Lookup the user; if found, update the values in req.body
+    User.findOne({ username: userName}, function(err, result) {
+        // userName not found
+        if (!result) {
+            res.status(400).json({
+                errorMessage: 'Username not found',
+            });
+        }
+        // userName was found, update it
+        else  {
+            req.params.id = result._id;
+            controller.update(req, res, next);
+        }
+    });
 });
 
 // DELETE route: /users/{username}
 // TODO: Delete all characters created by this username
 router.route('/:username').delete((req, res, next) => {
+    console.log("Attempting to remove username: " + req.params.username);
+
     User.remove( {username: req.params.username})
     .then(doc => {
-        if(!doc) {return res.status(404).end();}
-        res.status(204).json({message: 'User deleted'});
+        if(!doc) {
+            // No success
+            res.status(404).end();
+        }
+        else {
+            // 204: success and no body content
+            res.status(204).end();
+        }
     })
     .catch(err => next(err));
 });
