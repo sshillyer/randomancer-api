@@ -81,9 +81,12 @@ router.route('/:id').delete((req, res, next) => {
     .remove().exec()
     
     Character.update(
-        { skills: skillId },
-        { $pull: { 'skills' : {skills : {$in: [skillId] } } } });
-    
+        {}, // update all Character records with that skill
+        { $pull: { 'skills' : skillId }},
+        {safe: true, upsert: true, new : true},
+        function(err, model) {
+            if(err) console.log(err);
+    });
 //    Character.update( {skills: skillId}, {$pullAll: { skills: [skillId] } } );
     
     res.status(200).json({

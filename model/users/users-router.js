@@ -107,7 +107,6 @@ router.route('/:username').put((req, res, next) => {
 });
 
 // DELETE route: /users/{username}
-// TODO: Delete all characters created by this username
 router.route('/:username').delete((req, res, next) => {
     var userName = req.params.username;
     console.log("Attempting to remove username: " + userName);
@@ -236,7 +235,6 @@ router.route('/:username/characters').put((req, res, next) => {
 });
 
 // DELETE route: /users/{username}/characters
-// TODO: Delete all characters created by this username
 router.route('/:username/characters').delete((req, res, next) => {
     res.status(400).json({
         errorMessage: "Cannot DELETE to /users/{username}/characters",
@@ -249,7 +247,7 @@ router.route('/:username/characters').delete((req, res, next) => {
 * /users/{username}/characters/{id} handling
 /*******************************************************/
 
-// GET route: /users/{username}/characters
+// GET route: /users/{username}/characters/{id}
 // Returns JSON of all characters belonging to {username}
 router.route('/:username/characters/:id').get((req, res, next) => {
     // Find characters with matching ID and return after populating references
@@ -260,7 +258,7 @@ router.route('/:username/characters/:id').get((req, res, next) => {
 });
 
 
-// POST route: /users/{username}/characters
+// POST route: /users/{username}/characters/{id}
 router.route('/:username/characters/:id').post((req, res, next) => {
     res.status(400).json({
         errorMessage: "Cannot POST to /users/{username}/characters/{id}",
@@ -268,7 +266,7 @@ router.route('/:username/characters/:id').post((req, res, next) => {
 });
 
 
-// PUT route: /users/{username}/characters
+// PUT route: /users/{username}/characters/{id}
 router.route('/:username/characters/:id').put((req, res, next) => {
     // Search criteria pulled from URL
     var conditions = { _id: req.params.id };
@@ -284,8 +282,8 @@ router.route('/:username/characters/:id').put((req, res, next) => {
     });
 });
 
-// DELETE route: /users/{username}/characters
-// TODO: Delete all characters created by this username
+
+// DELETE route: /users/{username}/characters/{id}
 router.route('/:username/characters/:id').delete((req, res, next) => {
     var userName = req.params.username;
     console.log("Attempting to delete character for username: " + userName);
@@ -318,7 +316,6 @@ router.route('/:username/characters/:id').delete((req, res, next) => {
         }
     }); 
 });
-
 
 
 
