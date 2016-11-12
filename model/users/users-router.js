@@ -18,7 +18,8 @@ const router = new Router();
 * Base /users handling (and querystrings)
 /*******************************************************/
 
-// GET route. /users (get all) or querystring (/users?skill=Arcana)
+// GET route. /users (get all) or querystring (/users?username=Bob)
+// Returns: JSON of all users
 router.route('/').get((req, res, next) => {
     // See controller.js in root dir for logic
     controller.find(req, res, next);
@@ -26,21 +27,36 @@ router.route('/').get((req, res, next) => {
 
 
 // POST route: /users (Create new skill)
-// Returns the skill built and its id as JSON
+// Returns: JSON of new user
 router.route('/').post((req, res, next) => {
-    controller.create(req, res, next);
+    // Check if username is taken
+    var userName = req.body.username;
+
+    User.findOne({ username: userName}, function(err, result) {
+        // If userName not found, then we can create the new user
+        if (!result) {
+            controller.create(req, res, next);
+        }
+        // userName was found, send back error message            
+        else
+            res.status(400).json({
+            errorMessage: 'Username not unique',
+        });
+    });
 });
 
 
 // PUT route: /users  (disallowed)
+// Returns: 400, JSON Error message
 router.route('/').put((req, res, next) => {
     res.status(400).json({
-        errorMessage: 'Cannot PUT to /users without valid id of skill',
-        correctiveAction: "Send PUT to /users/{id} to update values"
+        errorMessage: 'Cannot PUT to /users without username',
+        correctiveAction: "Send PUT to /users/{username} to update values"
     })
 });
 
-// DELETE route: /users Error message / status 400
+// DELETE route: /users 
+// Returns: 400, JSON Error message
 router.route('/').delete((req, res, next) => {
     res.status(400).json({
         errorMessage: 'Cannot DELETE to /users without valid id of skill',
@@ -51,44 +67,38 @@ router.route('/').delete((req, res, next) => {
 
 
 /********************************************************
-* /users/{id} handling
+* /users/{username} handling
 /*******************************************************/
 
 // GET route: /users/{id}
-router.route('/:id').get((req, res, next) => {
-    controller.findById(req, res, next);
+// Returns the user or 
+router.route('/:username').get((req, res, next) => {
+    req.query = {'username': req.params.username};
+    controller.find(req, res, next);
 });
 
-// POST route: /users/{id}
-router.route('/:id').post((req, res, next) => {
+// POST route: /users/{username}
+router.route('/:username').post((req, res, next) => {
     res.status(400).json({
-        errorMessage: "Cannot POST to /users/{id}, use PUT to update or DELETE to delete or GET to retreive",
+        errorMessage: "Cannot POST to /users/{username}, use PUT to update or DELETE to delete or GET to retreive",
     })
 });
 
 
-// PUT route: /users/{id}
-router.route('/:id').put((req, res, next) => {
+// PUT route: /users/{username}
+router.route('/:username').put((req, res, next) => {
     controller.update(req, res, next);
 });
 
-// DELETE route: /users/{id}
-// Also delete references in character documents to this skil....
-router.route('/:id').delete((req, res, next) => {
-    var skillId = req.params.id;
-    
-    User.find({_id: skillId})
-    .remove().exec()
-    
-    Character.update(
-        { users: skillId },
-        { $pull: { 'users' : {users : {$in: [skillId] } } } });
-    
-//    Character.update( {users: skillId}, {$pullAll: { users: [skillId] } } );
-    
-    res.status(200).json({
-        message: 'User with id ' + skillId + ' deleted'
-    });
+// DELETE route: /users/{username}
+// TODO: Delete all characters created by this username
+router.route('/:username').delete((req, res, next) => {
+    User.remove( {username: req.params.username})
+    .then(doc => {
+        if(!doc) {return res.status(404).end();}
+        res.status(204).json({message: 'User deleted'});
+    })
+    .catch(err => next(err));
 });
 
 

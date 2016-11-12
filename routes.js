@@ -17,6 +17,7 @@ const router = new Router();    // Instantiate the router object
 // Each URI category has its own route file for more modularization
 const characters = require('./model/characters/characters-router');
 const skills = require('./model/skills/skills-router');
+const users = require('./model/users/users-router');
 
 // Allow CORS
 router.all('/', function(req, res, next) {
@@ -32,6 +33,7 @@ router.route('/charmaker').get((req,res, next) => {
     var baseUrl = "/charmaker";
     var charRoot = "/characters";
     var skillRoot = "/skills";
+    var userRoot = "/users";
     var idSuffix = "/{id}";
     var querySuffix = "?{property}={value}";
     
@@ -50,6 +52,11 @@ router.route('/charmaker').get((req,res, next) => {
                 base: baseUrl + skillRoot,
                 id: baseUrl + skillRoot + idSuffix,
                 query: baseUrl + skillRoot + querySuffix,
+            },
+            users : {
+                base: baseUrl + userRoot,
+                id: baseUrl + userRoot + idSuffix,
+                query: baseUrl + userRoot + querySuffix,
             }
         }
     });
@@ -78,6 +85,7 @@ router.route('/charmaker').delete((req,res, next) => {
 // Set router to use *-routes.js files per beginning of file
 router.use('/charmaker/characters', characters);
 router.use('/charmaker/skills', skills);
+router.use('/charmaker/users', users);
 
 // Export all of router object back to caller in index.js
 module.exports = router;
