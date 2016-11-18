@@ -60,7 +60,7 @@ mongoose.connect(credentials.mongo.development.connectionString, function(err, d
     
     db = database;  // Assign the connection to the db variable
     
-    const port = 8091;
+    const port = 8090;
     
     app.listen(port, function() {
         console.log('listening on ' + port)

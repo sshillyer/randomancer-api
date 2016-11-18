@@ -1,0 +1,675 @@
+{
+	"variables": [],
+	"info": {
+		"name": "randomancer-api",
+		"_postman_id": "9e213523-1f82-4d7a-d082-a691b149fbb0",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "characters/ GET",
+			"request": {
+				"url": "http://52.26.146.27:8090/charmaker/characters",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "newuser",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "password",
+							"value": "newpass",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": "Get users"
+			},
+			"response": []
+		},
+		{
+			"name": "users/ GET",
+			"request": {
+				"url": "52.26.146.27:8090/charmaker/users",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "newuser",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "password",
+							"value": "newpass",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": "Get users"
+			},
+			"response": []
+		},
+		{
+			"name": "users POST",
+			"request": {
+				"url": "52.26.146.27:8090/charmaker/users",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "shawn3",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "password",
+							"value": "shawnpass",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": "Users POST"
+			},
+			"response": []
+		},
+		{
+			"name": "/users PUT (\"invalid\")",
+			"request": {
+				"url": "52.26.146.27:8090/charmaker/users",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "shawn3",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "password",
+							"value": "spassw",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": "Users POST"
+			},
+			"response": []
+		},
+		{
+			"name": "/users DELETE (\"invalid\")",
+			"request": {
+				"url": "52.26.146.27:8090/charmaker/users",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "newuser34",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "password",
+							"value": "newpass",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": "Users POST"
+			},
+			"response": []
+		},
+		{
+			"name": "users/{username} GET",
+			"request": {
+				"url": "52.26.146.27:8090/charmaker/users/user",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "newuser",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "password",
+							"value": "newpass",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": "Get users by username"
+			},
+			"response": []
+		},
+		{
+			"name": "users/{username} POST",
+			"request": {
+				"url": "52.26.146.27:8090/charmaker/users/anyUserName",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "newuser",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "password",
+							"value": "newpass",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "users/{username} PUT",
+			"request": {
+				"url": "52.26.146.27:8090/charmaker/users/shawn3",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "password",
+							"value": "shawnpassnew",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "characters[]",
+							"value": "5826a80e8ac6afd4e4ca15c9",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "users/{username} PUT with characters",
+			"request": {
+				"url": "52.26.146.27:8090/charmaker/users/shawn3",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "password",
+							"value": "shawnpassnew",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "characters[]",
+							"value": "5826b6996745a9dccc6378ac",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "characters[]",
+							"value": "5826b6996745a9dccc6378ab",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "characters[]",
+							"value": "5826bdb42bdd1dcb80885de7",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "users/{username} DELETE",
+			"request": {
+				"url": "52.26.146.27:8090/charmaker/users/shawn3",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "users/{username}/characters/ GET",
+			"request": {
+				"url": "52.26.146.27:8090/charmaker/users/shawn3/characters",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "newuser",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "password",
+							"value": "newpass",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": "Get users' characters"
+			},
+			"response": []
+		},
+		{
+			"name": "/users/{username}/characters/  POST",
+			"request": {
+				"url": "52.26.146.27:8090/charmaker/users/shawn3/characters",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "firstName",
+							"value": "Jimm",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "lastName",
+							"value": "Talonfoot",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "gender",
+							"value": "Male",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "race",
+							"value": "Aarokocra",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "skills[]",
+							"value": "58095ecb9aa1b2ce597e1ca6",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "skills[]",
+							"value": "58095ecb9aa1b2ce597e1cac",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "users/{username}/characters/ PUT",
+			"request": {
+				"url": "52.26.146.27:8090/charmaker/users/shawn3/characters",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "newuser",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "password",
+							"value": "newpass",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": "Get users' characters"
+			},
+			"response": []
+		},
+		{
+			"name": "users/{username}/characters/ DELETE",
+			"request": {
+				"url": "52.26.146.27:8090/charmaker/users/shawn3/characters",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "newuser",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "password",
+							"value": "newpass",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": "Get users' characters"
+			},
+			"response": []
+		},
+		{
+			"name": "users/{username}/characters/{id} GET",
+			"request": {
+				"url": "52.26.146.27:8090/charmaker/users/shawn3/characters/5826c24fc486c5e1c4386402",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "newuser",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "password",
+							"value": "newpass",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": "Get users' characters"
+			},
+			"response": []
+		},
+		{
+			"name": "users/{username}/characters/{id} POST",
+			"request": {
+				"url": "52.26.146.27:8090/charmaker/users/shawn3/characters/5826c24fc486c5e1c4386402",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "newuser",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "password",
+							"value": "newpass",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": "Get users' characters"
+			},
+			"response": []
+		},
+		{
+			"name": "users/{username}/characters/{id} DELETE",
+			"request": {
+				"url": "52.26.146.27:8090/charmaker/users/shawn3/characters/5826c0452b8a3fdf08b2110a",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"description": "Get users' characters"
+			},
+			"response": []
+		},
+		{
+			"name": "users/{username}/characters/{id} PUT",
+			"request": {
+				"url": "52.26.146.27:8090/charmaker/users/shawn3/characters/5826c24fc486c5e1c4386402",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "",
+							"value": "",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": "Get users' characters"
+			},
+			"response": []
+		},
+		{
+			"name": "make a skill",
+			"request": {
+				"url": "http://52.26.146.27:8090/charmaker/skills",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "skill",
+							"value": "Deleteme",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "attribute",
+							"value": "Strength",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": "Get users"
+			},
+			"response": []
+		},
+		{
+			"name": "delete a skill and references",
+			"request": {
+				"url": "http://52.26.146.27:8090/charmaker/skills/5826d0dcfe5f72e1f459953c",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "skill",
+							"value": "Deleteme",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "attribute",
+							"value": "Strength",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": "Get users"
+			},
+			"response": []
+		}
+	]
+}
