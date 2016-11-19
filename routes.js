@@ -38,7 +38,7 @@ router.route('/charmaker').get((req,res, next) => {
     var querySuffix = "?{property}={value}";
     
     res.status(200).json({ 
-        message: 'Welcome to charmaker API!',
+        message: 'Welcome to Randomancer-API!',
         version: "1.0",
         documentation: "https://github.com/sshillyer/charmaker",
         urls: {

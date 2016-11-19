@@ -14,6 +14,35 @@ const Router = require('express').Router;
 const router = new Router();
 
 
+// Login route
+router.route('/login').post((req, res, next) => {
+    var userName = req.body.username;
+
+    User.findOne({ username: userName}, function(err, result) {
+        // If userName not found, then we can create the new user
+        if (result) {
+            console.log(result);
+            if (req.body.password == result.password) {
+                res.status(202).json({
+                    'authorized': 'true',
+                });
+            }
+            else {
+                res.status(401).json({
+                    'authorized': 'false'
+                });
+            }
+        }
+        // userName was found, send back error message            
+        else
+            res.status(400).json({
+            errorMessage: 'Username not found',
+        });
+    });
+});
+
+
+
 /********************************************************
 * Base /users handling (and querystrings)
 /*******************************************************/
