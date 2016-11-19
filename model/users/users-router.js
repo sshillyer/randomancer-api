@@ -21,7 +21,9 @@ router.route('/login').post((req, res, next) => {
     User.findOne({ username: userName}, function(err, result) {
         // If userName not found, then we can create the new user
         if (result) {
-            console.log(result);
+            console.log(result.password);
+            console.log(req.body.password);
+            var isPasswordMatch = (result.password == req.body.password);
             if (req.body.password == result.password) {
                 res.status(202).json({
                     'authorized': 'true',
@@ -95,6 +97,87 @@ router.route('/').delete((req, res, next) => {
 });
 
 
+
+
+
+
+
+
+
+
+/********************************************************
+* /users/{username}/characters/{id} handling
+/*******************************************************/
+
+// GET route: /users/{username}/characters/{id}
+// Returns JSON of all characters belonging to {username}
+router.route('/:username/characters/:id').get((req, res, next) => {
+    // Find characters with matching ID and return after populating references
+    Character.findById(req.params.id)
+    .populate('skills', 'skill')
+    .then(doc => res.status(200).json(doc))
+    .catch(err => next(err));
+});
+
+
+// POST route: /users/{username}/characters/{id}
+router.route('/:username/characters/:id').post((req, res, next) => {
+    res.status(400).json({
+        errorMessage: "Cannot POST to /users/{username}/characters/{id}",
+    })
+});
+
+
+// PUT route: /users/{username}/characters/{id}
+router.route('/:username/characters/:id').put((req, res, next) => {
+    // Search criteria pulled from URL
+    var conditions = { _id: req.params.id };
+    
+    // Update character then return updated character if it existed
+    Character.update(conditions, req.body)
+    .then(doc=> {
+        if (!doc) {res.status(404).end(); }
+        Character.findById(req.params.id)
+        .populate('skills', 'skill')
+        .then(doc => res.status(200).json(doc))
+        .catch(err => next(err));
+    });
+});
+
+
+// DELETE route: /users/{username}/characters/{id}
+router.route('/:username/characters/:id').delete((req, res, next) => {
+    var userName = req.params.username;
+    console.log("Attempting to delete character for username: " + userName);
+
+    // Lookup the user; if found, update the values in req.body
+    User.findOne({ username: userName}, function(err, user) {
+        // userName not found
+        if (!user) {
+            res.status(400).json({
+                errorMessage: 'Username not found',
+            });
+        }
+
+        // userName was found, make the character
+        else  {
+            console.log("user.id: " + user.id);
+            User.findByIdAndUpdate( 
+                user.id,
+                { $pull: {'characters': req.params.id}},
+                {safe: true, upsert: true, new : true},
+                function(err, model) {
+                    if(err) console.log(err);
+            });
+
+            Character.find({_id: req.params.id})
+            .remove().exec()
+            res.status(200).json({
+                message: 'Character with id ' + req.params.id + ' deleted'
+            })
+        }
+    }); 
+});
 
 /********************************************************
 * /users/{username} handling
@@ -178,7 +261,6 @@ router.route('/:username').delete((req, res, next) => {
     }); 
 });
 
-
 /********************************************************
 * /users/{username}/characters handling
 /*******************************************************/
@@ -205,12 +287,16 @@ router.route('/:username/characters').get((req, res, next) => {
             console.log(characters);
 
             // Find all Character documents where id in the array
-            Character.find({
-                '_id': { $in: characters}
-            }, function(err, docs){
-                console.log(docs);
-                res.status(200).json(docs);
-            });
+            // Character.find({
+            //     '_id': { $in: characters}
+            // }, function(err, docs){
+            //     console.log(docs);
+            //     res.status(200).json(docs);
+
+                Character.find({'_id': { $in: characters}})
+                    .populate('skills', 'skill')
+                    .then(doc => res.status(200).json(doc))
+                    .catch(err => next(err));
         }
     }); 
 });
@@ -269,83 +355,5 @@ router.route('/:username/characters').delete((req, res, next) => {
         errorMessage: "Cannot DELETE to /users/{username}/characters",
     })
 });
-
-
-
-/********************************************************
-* /users/{username}/characters/{id} handling
-/*******************************************************/
-
-// GET route: /users/{username}/characters/{id}
-// Returns JSON of all characters belonging to {username}
-router.route('/:username/characters/:id').get((req, res, next) => {
-    // Find characters with matching ID and return after populating references
-    Character.findById(req.params.id)
-    .populate('skills', 'skill')
-    .then(doc => res.status(200).json(doc))
-    .catch(err => next(err));
-});
-
-
-// POST route: /users/{username}/characters/{id}
-router.route('/:username/characters/:id').post((req, res, next) => {
-    res.status(400).json({
-        errorMessage: "Cannot POST to /users/{username}/characters/{id}",
-    })
-});
-
-
-// PUT route: /users/{username}/characters/{id}
-router.route('/:username/characters/:id').put((req, res, next) => {
-    // Search criteria pulled from URL
-    var conditions = { _id: req.params.id };
-    
-    // Update character then return updated character if it existed
-    Character.update(conditions, req.body)
-    .then(doc=> {
-        if (!doc) {res.status(404).end(); }
-        Character.findById(req.params.id)
-        .populate('skills', 'skill')
-        .then(doc => res.status(200).json(doc))
-        .catch(err => next(err));
-    });
-});
-
-
-// DELETE route: /users/{username}/characters/{id}
-router.route('/:username/characters/:id').delete((req, res, next) => {
-    var userName = req.params.username;
-    console.log("Attempting to delete character for username: " + userName);
-
-    // Lookup the user; if found, update the values in req.body
-    User.findOne({ username: userName}, function(err, user) {
-        // userName not found
-        if (!user) {
-            res.status(400).json({
-                errorMessage: 'Username not found',
-            });
-        }
-
-        // userName was found, make the character
-        else  {
-            console.log("user.id: " + user.id);
-            User.findByIdAndUpdate( 
-                user.id,
-                { $pull: {'characters': req.params.id}},
-                {safe: true, upsert: true, new : true},
-                function(err, model) {
-                    if(err) console.log(err);
-            });
-
-            Character.find({_id: req.params.id})
-            .remove().exec()
-            res.status(200).json({
-                message: 'Character with id ' + req.params.id + ' deleted'
-            })
-        }
-    }); 
-});
-
-
 
 module.exports = router;
