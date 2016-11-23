@@ -286,17 +286,10 @@ router.route('/:username/characters').get((req, res, next) => {
             console.log("*****Characters looks like this:");
             console.log(characters);
 
-            // Find all Character documents where id in the array
-            // Character.find({
-            //     '_id': { $in: characters}
-            // }, function(err, docs){
-            //     console.log(docs);
-            //     res.status(200).json(docs);
-
-                Character.find({'_id': { $in: characters}})
-                    .populate('skills', 'skill')
-                    .then(doc => res.status(200).json(doc))
-                    .catch(err => next(err));
+            Character.find({'_id': { $in: characters}})
+                .populate('skills', 'skill')
+                .then(doc => res.status(200).json(doc))
+                .catch(err => next(err));
         }
     }); 
 });

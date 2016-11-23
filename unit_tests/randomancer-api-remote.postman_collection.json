@@ -1,8 +1,8 @@
 {
 	"variables": [],
 	"info": {
-		"name": "randomancer-api",
-		"_postman_id": "9e213523-1f82-4d7a-d082-a691b149fbb0",
+		"name": "randomancer-api REMOTE SERVER",
+		"_postman_id": "80a80b96-366b-da74-6a3d-175a45216e91",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -175,7 +175,7 @@
 		{
 			"name": "users/{username} GET",
 			"request": {
-				"url": "52.26.146.27:8090/charmaker/users/user",
+				"url": "52.26.146.27:8090/charmaker/users/shawn3/",
 				"method": "GET",
 				"header": [
 					{
@@ -668,6 +668,39 @@
 					]
 				},
 				"description": "Get users"
+			},
+			"response": []
+		},
+		{
+			"name": "users/login",
+			"request": {
+				"url": "52.26.146.27:8090/charmaker/users/login",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "vorquin",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "password",
+							"value": "vorquin",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": "Users POST login"
 			},
 			"response": []
 		}
